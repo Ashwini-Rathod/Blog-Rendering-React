@@ -23,11 +23,16 @@ class Blog extends Component{
     }
 
     render(){
-        // console.log(this.state.blog);
         return(
             <div>
-                <h1>{this.state.blog.author}</h1>
-                <h1>{this.state.blog.title}</h1>
+                <div>
+                    <h1>{this.state.blog.title}</h1>
+                    <img src={this.state.blog.imageUrl} alt="Blog Banner"/>
+                    <p>{this.state.blog.content}</p>
+                </div>
+                <div>
+                    <h1>Related Links</h1>
+                </div>
             </div>
         )
     }
