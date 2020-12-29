@@ -1,0 +1,10 @@
+.nav-container{
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+.nav-links{
+    color: white;
+    list-style: none;
+}

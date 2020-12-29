@@ -1,5 +1,6 @@
 import {Component } from "react";
 import {Link} from "react-router-dom";
+import "./Blogs.css";
 
 class Blogs extends Component{
     constructor(props){
@@ -27,21 +28,27 @@ class Blogs extends Component{
         console.log(this.props);
         return (
             <div>
-                <h1>Blogs</h1>
+                <div className="blog-container">
                 {
                     this.state.blogs.map((blog)=>{
                         return(
                             <div className= "blog-card" key={blog.id}>
-                                <img src= {blog.imageUrl} alt="Blog Banner" className="blog-image"></img>
-                                <p>{blog.author}</p>
+                                <div>
                                 <Link to={`/blogs/${blog.id}`}>
-                                    <p>{blog.title}</p>
+                                     <img src= {blog.imageUrl} alt="Blog Banner" className="blog-image"></img>
                                 </Link>
+                                </div>
+                                <div className="blog-card-content">
+                                    <p>{blog.author}</p>
+                                    <p>{blog.title}</p>
+                                </div>
+                              
                                
                             </div>
                         )
                     })
                 }
+                </div>
             </div>
         )
     }

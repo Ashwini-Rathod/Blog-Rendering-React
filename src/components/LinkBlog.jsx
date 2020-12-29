@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-class Blog extends Component{
+class LinkBlog extends Component{
     constructor(props){
     super(props)
         this.state = {
@@ -40,7 +40,7 @@ class Blog extends Component{
                             relatedLinks.map((link)=>{
                                 return (
                                     <div>
-                                    <Link to={`/links/${link.id}`}>
+                                    <Link to={`/blogs/${link.id}`}>
                                         <p>{link.title}</p>
                                     </Link>
                                     </div>
@@ -57,4 +57,4 @@ class Blog extends Component{
     }
 }
 
-export default Blog;
+export default LinkBlog;
