@@ -1,8 +1,11 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import initFontAwesome from "../components/initFontAwesome";
 import NotFound from "../components/NotFound";
 import "./Blog.css";
+
 class Blog extends Component{
     constructor(props){
     super(props)
@@ -19,9 +22,7 @@ class Blog extends Component{
             return response.json();
         })
         .then((data)=>{
-            console.log(data);
             this.setState({blog: data.data, status: data.status, relatedLinks: data.data.links});
-            console.log(this.state.relatedLinks);
         })
         .catch((err)=>{
             console.log(err);
@@ -29,7 +30,7 @@ class Blog extends Component{
     }
 
     render(){
-        // let relatedLinks = (this.state.blog.links);
+        initFontAwesome();
         return(
             <div>
                 {
@@ -38,39 +39,38 @@ class Blog extends Component{
                         <div>
                         <Nav/>
                         <div className="blog-elements">
-                        <div className="blog-content">
-                            <h1>{this.state.blog.title}</h1>
-                            <img src={this.state.blog.imageUrl} alt="Blog Banner"/>
-                            <p>{this.state.blog.content}</p>
-                        </div>
-                        <div className="sticky-panel">
-                            <h1>Related Links</h1>
-                            {
-                                this.state.relatedLinks ? (
-                                    this.state.relatedLinks.map((link)=>{
-                                        return (
-                                            <div  className="side-panel">
-                                            <Link to={`/links/${link.id}`} className="create-link">
-                                                {link.title}
-                                                <hr className="link-hr"/>
-                                            </Link>
-                                            </div>
+                            <div className="blog-content">
+                                <h1 className="blog-title">{this.state.blog.title}</h1>
+                                <img src={this.state.blog.imageUrl} alt="Blog Banner" className="blog-image"/>
+                                <p className="blog-description">{this.state.blog.content}</p>
+                            </div>
+                            <div className="sticky-panel">
+                                <h1 className="related-links">Related Links</h1>
+                                {
+                                    this.state.relatedLinks !== [] ? (
+                                        this.state.relatedLinks.map((link)=>{
+                                            return (
+                                                <div  className="side-panel">
+                                                    <Link to={`/links/${link.id}`} className="create-link">
+                                                        {link.title}
+                                                        <hr className="link-hr"/>
+                                                    </Link>
+                                                </div>
                                         )
                                     })
                                 ): (
-                                    console.log("No Related Links")
+                                    <h1>Loading...</h1>
                                 )
                             }
-        
                         </div>
                     </div>
+                    <Footer/>
                     </div>
                     ): 
                     (
                     <NotFound/>
                     )
                 }
-
             </div>
 
         )

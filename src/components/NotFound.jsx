@@ -1,13 +1,14 @@
 import "./NotFound.css";
 import {Link } from "react-router-dom";
+
 function NotFound(){
     return(
         <div className="not-found-container">
-            <h1>Sorry!</h1>
-            <h2>Page not found</h2>
+            <img src="https://freefrontend.com/assets/img/html-funny-404-pages/Pure-CSS-404-Error-Page.png" alt="" className="image"></img>
             <Link to="/">
-                <button>Go back to Home</button>
+                <button className="btn">Go back to Home</button>
             </Link>
+
         </div>
     )
 }

@@ -1,6 +1,8 @@
 import {Component } from "react";
 import {Link} from "react-router-dom";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import initFontAwesome from "../components/initFontAwesome";
 import "./Blogs.css";
 
 class Blogs extends Component{
@@ -18,7 +20,6 @@ class Blogs extends Component{
             return response.json();
         })
         .then((data)=>{
-            console.log(data);
             this.setState({blogs: data.data[0]});
         })
         .catch((err)=>{
@@ -26,7 +27,7 @@ class Blogs extends Component{
         })
     }
     render(){
-        console.log(this.props);
+        initFontAwesome();
         return (
             <div>
                 <Nav/>
@@ -37,20 +38,19 @@ class Blogs extends Component{
                             <div className= "blog-card" key={blog.id}>
                                 <div>
                                 <Link to={`/blogs/${blog.id}`}>
-                                     <img src= {blog.imageUrl} alt="Blog Banner" className="blog-image"></img>
+                                     <img src= {blog.imageUrl} alt="Blog Banner" className="blog-image-tiles"></img>
                                 </Link>
                                 </div>
                                 <div className="blog-card-content">
-                                    <p className="blog-author">{blog.author}</p>
-                                    <p>{blog.title}</p>
-                                </div>
-                              
-                               
+                                    <h3 className="blog-author">{blog.author}</h3>
+                                    <h3 className="blog-title">{blog.title}</h3>
+                                </div>  
                             </div>
                         )
                     })
                 }
                 </div>
+                <Footer/>
             </div>
         )
     }
