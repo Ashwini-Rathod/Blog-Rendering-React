@@ -1,21 +1,16 @@
 import {Component} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-// import Home from "../components/Home";
-import Nav from "../components/Nav";
-import About from "../components/About";
-import Blogs from "../components/Blogs";
-import Blog from "../components/Blog";
-import LinkBlog from "../components/LinkBlog";
+import Blogs from "../pages/Blogs";
+import Blog from "../pages/Blog";
+import LinkBlog from "../pages/LinkBlog";
+import NotFound from "../components/NotFound";
 
 class Router extends Component{
     render(){
         return(
             <div>
                 <BrowserRouter>
-                    <Nav/>
                     <Switch >
-                    {/* <Route path="/" exact component={Home}></Route> */}
-                    <Route path= "/about" exact component={About}/>
                     <Route path="/" exact component={Blogs}/>
                     <Route 
                         path="/blogs/:id" 
@@ -35,6 +30,7 @@ class Router extends Component{
                         }
                         }
                     />
+                    <Route component={NotFound}/>
                     </Switch>
                 </BrowserRouter>
             </div>

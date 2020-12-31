@@ -1,10 +1,18 @@
 .nav-container{
-    background-color: black;
+    background-color: #2e4052;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     color: white;
 }
 .nav-links{
     color: white;
     list-style: none;
+    margin-right: 10px;
+}
+.link-home{
+    text-decoration: none;
+}
+.nav-logo{
+    margin-left: 10px;
 }

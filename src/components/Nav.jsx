@@ -3,9 +3,9 @@ import "./Nav.css";
 function Nav (){
     return (
         <nav className="nav-container">
-            <h3>Blogs.com</h3>
+            <h2 className="nav-logo">Blogs.com</h2>
             <ul>
-                <Link to="/">
+                <Link to="/" className="link-home">
                  <li  className="nav-links">Home</li>
                 </Link>
             </ul>

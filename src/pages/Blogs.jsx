@@ -1,5 +1,6 @@
 import {Component } from "react";
 import {Link} from "react-router-dom";
+import Nav from "../components/Nav";
 import "./Blogs.css";
 
 class Blogs extends Component{
@@ -28,6 +29,7 @@ class Blogs extends Component{
         console.log(this.props);
         return (
             <div>
+                <Nav/>
                 <div className="blog-container">
                 {
                     this.state.blogs.map((blog)=>{
@@ -39,7 +41,7 @@ class Blogs extends Component{
                                 </Link>
                                 </div>
                                 <div className="blog-card-content">
-                                    <p>{blog.author}</p>
+                                    <p className="blog-author">{blog.author}</p>
                                     <p>{blog.title}</p>
                                 </div>
                               
