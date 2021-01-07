@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import initFontAwesome from "../components/initFontAwesome";
 import NotFound from "../components/NotFound";
 import "./Blog.css";
+const url = "https://blog-rendering.herokuapp.com/blogs/";
 
 class Blog extends Component{
     constructor(props){
@@ -17,7 +18,8 @@ class Blog extends Component{
     }
 
     componentDidMount = () => {
-        fetch(`http://localhost:5000/blogs/${this.props.match.params.id}`)
+        // console.log("props from component did mount", this.props);
+        fetch(`${url}${this.props.match.params.id}`)
         .then((response)=>{
             return response.json();
         })
@@ -29,7 +31,34 @@ class Blog extends Component{
         })
     }
 
+    static getDerivedStateFromProps(nextProps, prevState){
+        console.log(nextProps);
+        console.log(prevState);
+        return(
+            console.log("msg")
+        )
+    }
+
+    renderBlog(id){
+        // this.setState({blog: [], relatedLinks: []});
+        // this.props.history.push(`/blogs/${id}`);
+        fetch(`${url}${id}`)
+        .then((response)=>{
+            return response.json();
+        })
+        .then((data)=>{
+            console.log("renderBlog props: ",this.props);//current id
+            console.log(data.data);
+            this.setState({blog: data.data ,relatedLinks: data.data.links})
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
     render(){
+        // console.log("these props from render: ",this.props.match.params.id);//currentlocation
+        console.log("state: ", this.state.blog);
         initFontAwesome();
         return(
             <div>
@@ -50,21 +79,25 @@ class Blog extends Component{
                                     this.state.relatedLinks !== [] ? (
                                         this.state.relatedLinks.map((link)=>{
                                             return (
-                                                <div  className="side-panel">
-                                                    <Link to={`/links/${link.id}`} className="create-link">
+                                                <div  className="side-panel" id={link.id}>
+                                                    <Link 
+                                                    to={`/blogs/${link.id}`} 
+                                                    id={link.id} className="create-link" 
+                                                    onClick={()=>this.renderBlog(link.id)}>
                                                         {link.title}
                                                         <hr className="link-hr"/>
                                                     </Link>
                                                 </div>
                                         )
                                     })
-                                ): (
-                                    <h1>Loading...</h1>
-                                )
-                            }
+                                    ):
+                                    (
+                                        console.log("No related links")
+                                    )
+                                }
+                            </div>
                         </div>
-                    </div>
-                    <Footer/>
+                        <Footer/>
                     </div>
                     ): 
                     (
@@ -72,7 +105,6 @@ class Blog extends Component{
                     )
                 }
             </div>
-
         )
     }
 }
