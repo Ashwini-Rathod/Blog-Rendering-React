@@ -4,7 +4,8 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import initFontAwesome from "../components/initFontAwesome";
 import NotFound from "../components/NotFound";
-import "./Blog.css";
+import styles from  "./Blog.module.css";
+import Spinner from "react-bootstrap/Spinner";
 const url = "https://blog-rendering.herokuapp.com/blogs/";
 
 class Blog extends Component{
@@ -13,43 +14,51 @@ class Blog extends Component{
         this.state = {
             blog: [],
             status: "",
-            relatedLinks: [],
         }
     }
 
     componentDidMount = () => {
-        // console.log("props from component did mount", this.props);
         fetch(`${url}${this.props.match.params.id}`)
         .then((response)=>{
             return response.json();
         })
         .then((data)=>{
-            this.setState({blog: data.data, status: data.status, relatedLinks: data.data.links});
+            if(data === undefined){
+                return new Error("Invalid Url");
+            }
+            else{
+                this.setState({blog: data.data, status: data.status});
+            }    
         })
         .catch((err)=>{
             console.log(err);
         })
     }
 
-    static getDerivedStateFromProps(nextProps, prevState){
-        console.log(nextProps);
-        console.log(prevState);
-        return(
-            console.log("msg")
-        )
+    componentDidUpdate = () =>{
+        if(this.state.blog !== undefined){
+            if(this.state.blog.id !== this.props.match.params.id){
+                fetch(`${url}${this.props.match.params.id}`)
+                .then((response)=>{
+                    return response.json();
+                })
+                .then((data)=>{
+                    this.setState({blog: data.data, status: data.status})
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+            }
+        } 
     }
 
     renderBlog(id){
-        // this.setState({blog: [], relatedLinks: []});
-        // this.props.history.push(`/blogs/${id}`);
         fetch(`${url}${id}`)
         .then((response)=>{
             return response.json();
         })
         .then((data)=>{
-            console.log("renderBlog props: ",this.props);//current id
-            console.log(data.data);
-            this.setState({blog: data.data ,relatedLinks: data.data.links})
+            this.setState({blog: data.data , status: data.status})
         })
         .catch((err)=>{
             console.log(err)
@@ -57,51 +66,59 @@ class Blog extends Component{
     }
 
     render(){
-        // console.log("these props from render: ",this.props.match.params.id);//currentlocation
-        console.log("state: ", this.state.blog);
         initFontAwesome();
         return(
             <div>
                 {
-                    this.state.status === "Successful" ? 
+                    this.state.status === "" ? 
                     (
-                        <div>
-                        <Nav/>
-                        <div className="blog-elements">
-                            <div className="blog-content">
-                                <h1 className="blog-title">{this.state.blog.title}</h1>
-                                <img src={this.state.blog.imageUrl} alt="Blog Banner" className="blog-image"/>
-                                <p className="blog-description">{this.state.blog.content}</p>
-                            </div>
-                            <div className="sticky-panel">
-                                <h1 className="related-links">Related Links</h1>
-                                {
-                                    this.state.relatedLinks !== [] ? (
-                                        this.state.relatedLinks.map((link)=>{
-                                            return (
-                                                <div  className="side-panel" id={link.id}>
-                                                    <Link 
-                                                    to={`/blogs/${link.id}`} 
-                                                    id={link.id} className="create-link" 
-                                                    onClick={()=>this.renderBlog(link.id)}>
-                                                        {link.title}
-                                                        <hr className="link-hr"/>
-                                                    </Link>
-                                                </div>
+                        <div className={styles["loading"]}>   
+                            <Spinner animation="grow" variant="primary" size="sm" className={styles["loading-spinner"]} />
+                            <Spinner animation="grow" variant="success" size="sm" className={styles["loading-spinner"]}/>
+                            <Spinner animation="grow" variant="danger" size="sm" className={styles["loading-spinner"]}/>
+                      </div>
+                    ) :
+                    (
+                        this.state.status === "Successful" ?
+                        (
+                            <div>
+                            <Nav/>
+                            <div className={styles["blog-elements"]}>
+                                <div className={styles["blog-content"]}>
+                                    <h1 className={styles["blog-title"]}>{this.state.blog.title}</h1>
+                                    <img src={this.state.blog.imageUrl} alt="Blog Banner" className={styles["blog-image"]}/>
+                                    <p className={styles["blog-description"]}>{this.state.blog.content}</p>
+                                </div>
+                                <div className={styles["sticky-panel"]}>
+                                    <h1 className={styles["related-links"]}>Related Links</h1>
+                                    {
+                                        this.state.blog.links !== [] ? (
+                                            this.state.blog.links.map((link, i)=>{
+                                                return (
+                                                    <div  className={styles["side-panel"]} key={`${link.id}${i}`}>
+                                                        <Link 
+                                                        to={`/blogs/${link.id}`} 
+                                                        id={link.id} className={styles["create-link"]} 
+                                                        onClick={()=>this.renderBlog(link.id)}>
+                                                            {link.title}
+                                                            <hr className={styles["link-hr"]}/>
+                                                        </Link>
+                                                    </div>
+                                            )
+                                        })
+                                        ):
+                                        (
+                                            console.log("No related links")
                                         )
-                                    })
-                                    ):
-                                    (
-                                        console.log("No related links")
-                                    )
-                                }
+                                    }
+                                </div>
                             </div>
+                            <Footer/>
                         </div>
-                        <Footer/>
-                    </div>
-                    ): 
-                    (
-                    <NotFound/>
+                        ) :
+                        (
+                            <NotFound/>
+                        )
                     )
                 }
             </div>

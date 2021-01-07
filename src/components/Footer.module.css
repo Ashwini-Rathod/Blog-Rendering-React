@@ -22,6 +22,9 @@ footer {
     background-color: #2e4052;
   }
   .footer-heading{
+    padding-top: 20px;
+    font-size: 25px;
+    margin-top: 15px;
     color: white;
   }
   @media(max-width: 650px){
@@ -31,7 +34,7 @@ footer {
       font-size: 25px;
     }
     .footer-heading{
-      font-size: 12px;
+      font-size: 20px;
     }
   }
   @media(max-width: 200px){
@@ -41,6 +44,6 @@ footer {
       font-size: 20px;
     }
     .footer-heading{
-      font-size: 8px;
+      font-size: 12px;
     }
   }

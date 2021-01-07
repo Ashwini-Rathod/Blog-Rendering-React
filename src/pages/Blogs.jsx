@@ -3,7 +3,9 @@ import {Link} from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import initFontAwesome from "../components/initFontAwesome";
-import "./Blogs.css";
+import  styles from "./Blogs.module.css";
+import NotFound from "../components/NotFound";
+import Spinner from "react-bootstrap/Spinner";
 const url = "https://blog-rendering.herokuapp.com/blogs";
 
 class Blogs extends Component{
@@ -13,7 +15,6 @@ class Blogs extends Component{
             blogs: [],
             status: "",
         }
-
     }
 
     componentDidMount = () =>{
@@ -29,31 +30,35 @@ class Blogs extends Component{
         })
     }
     render(){
-        console.log(this.state.status);
         initFontAwesome();
         return (
             <div>
                 {
                     this.state.status === "" ? 
                     (
-                        <h1>Loading</h1>
+                       <div className={styles["loading"]}>   
+                         <Spinner animation="grow" variant="primary" size="sm"className={styles["loading-spinner"]}/>
+                         <Spinner animation="grow" variant="success" size="sm" className={styles["loading-spinner"]}/>
+                         <Spinner animation="grow" variant="danger" size="sm" className={styles["loading-spinner"]}/>
+                       </div>
                     ) :
-                    (
-                        <div>
+                    ( 
+                        this.state.status === "Successful" ? (
+                            <div>
                             <Nav/>
-                            <div className="blog-container">
+                            <div className={styles["blog-container"]}>
                             {
                                 this.state.blogs.map((blog)=>{
                                     return(
-                                        <div className= "blog-card" key={blog.id}>
+                                        <div className={styles[ "blog-card"]} key={blog.id}>
                                             <div>
                                             <Link to={`/blogs/${blog.id}`}>
-                                                <img src= {blog.imageUrl} alt="Blog Banner" className="blog-image-tiles"></img>
+                                                <img src= {blog.imageUrl} alt="Blog Banner" className={styles["blog-image-tiles"]}></img>
                                             </Link>
                                             </div>
-                                            <div className="blog-card-content">
-                                                <h3 className="blog-author">{blog.author}</h3>
-                                                <h3 className="blog-title">{blog.title}</h3>
+                                            <div className={styles["blog-card-content"]}>
+                                                <h3 className={styles["blog-author"]}>{blog.author}</h3>
+                                                <h3 className={styles["blog-title"]}>{blog.title}</h3>
                                             </div>  
                                         </div>
                                     )
@@ -62,6 +67,10 @@ class Blogs extends Component{
                             </div>
                             <Footer/>
                         </div>
+                        ) : 
+                        (
+                            <NotFound/>
+                        )               
                     )
                 }
             </div>

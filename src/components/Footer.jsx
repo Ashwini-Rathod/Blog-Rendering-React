@@ -1,26 +1,26 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import footerstyle from "./Footer.module.css";
+import style from "./Footer.module.css";
 import {Component} from "react";
 
 class Footer extends Component{
     render(){
     return (
         <footer>
-            <div className={footerstyle["footer-heading"]}>
-                <h2>Follow us on social media to know more about us</h2>
+            <div className={style["footer-heading"]}>
+                <p>Follow us on social media to know more about us</p>
             </div>
-            <div className={footerstyle["icons"]}>
+            <div className={style["icons"]}>
                 <FontAwesomeIcon
                     icon={["fab", "facebook"]}
-                    className={footerstyle["facebook-icon"]}
+                    className={style["facebook-icon"]}
                 />
                 <FontAwesomeIcon
                     icon={["fab", "twitter"]}
-                    className={footerstyle["twitter-icon"]}
+                    className={style["twitter-icon"]}
                 />
                 <FontAwesomeIcon
                     icon={["fab", "linkedin"]}
-                    className={footerstyle["linkedin-icon"]}
+                    className={style["linkedin-icon"]}
                 />
             </div>
 
