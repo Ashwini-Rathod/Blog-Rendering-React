@@ -25,3 +25,29 @@ The home page consists of all the blogs that are fetched from the backend server
 2. Individual Blog Page: 
 
 This page contains the detailed information about a particular blog. It consists of a blog title, an banner image, and brief description about the blog. It also has an aside section which consists of a column known as Related Links. This column consists of few links which are relatable to the blog which the user is currently reading. This way, the user has an advantage of finding more similar blogs by just clicking upon any of the links provided in that column. This ensures that the user has an easy UI experience. The route for this page is: "/blogs/:id". Since each blog has an unique Id, ":id" will render the blog with that particular Id.
+
+### Running the Application:
+
+1. Clone the repository using
+
+     https://github.com/Ashwini-Rathod/Blog-Rendering-React
+
+2. Run this command only once:
+
+      npm install
+
+To install all the dependencies.
+
+3. Then run the command:
+
+      npm run start
+
+To start the React Application.
+
+4. The Backend is hosted on Heroku.
+
+[Link for Backend](https://blog-rendering.herokuapp.com/blogs)
+
+5. The application is hosted on vercel.
+
+The Live link for the same is: https://blog-rendering-react.vercel.app/
